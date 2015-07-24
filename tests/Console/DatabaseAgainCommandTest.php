@@ -242,7 +242,7 @@ class DatabaseAgainCommandTest extends TestCase
         $migrator->shouldReceive('removeMigrationLog')->once()->with('foo', '2.0');
         $migrator->shouldReceive('doDowngrade')->once()->with('foo', '2.0', 'Foo_2_0');
         $migrator->shouldReceive('doUpgrade')->once()->with('foo', '2.0', 'Foo_2_0');
-        $command->shouldReceive('call')->with('database:seed', ['name' => 'bar'])->once()->andReturn(0);
+        $command->shouldReceive('call')->with('database:seed', ['name' => 'bar', '--force' => true])->once()->andReturn(0);
 
         $this->runCommand($app, $command, ['group' => 'foo', '--seed' => 'bar']);
     }

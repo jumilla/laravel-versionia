@@ -55,7 +55,7 @@ class DatabaseAgainCommand extends Command
         $seed = $this->option('seed');
 
         if ($seed) {
-            $this->call('database:seed', ['name' => $seed]);
+            $this->call('database:seed', ['name' => $seed, '--force' => true]);
         }
     }
 

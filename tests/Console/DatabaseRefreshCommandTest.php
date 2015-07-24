@@ -45,7 +45,7 @@ class DatabaseRefreshCommandTest extends TestCase
 
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
-        $command->shouldReceive('call')->with('database:seed', ['name' => 'foo'])->once()->andReturn(0);
+        $command->shouldReceive('call')->with('database:seed', ['name' => 'foo', '--force' => true])->once()->andReturn(0);
 
         $this->runCommand($app, $command, ['--seed' => 'foo']);
     }
@@ -67,7 +67,7 @@ class DatabaseRefreshCommandTest extends TestCase
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
 
-        $this->runCommand($app, $command, ['--force' => '']);
+        $this->runCommand($app, $command, ['--force' => true]);
     }
 
     /**
@@ -107,7 +107,7 @@ class DatabaseRefreshCommandTest extends TestCase
         $migrator->shouldReceive('doDowngrade')->times(2);
         $migrator->shouldReceive('doUpgrade')->times(3);
 
-        $this->runCommand($app, $command, ['--force' => '']);
+        $this->runCommand($app, $command, []);
     }
 
     /**

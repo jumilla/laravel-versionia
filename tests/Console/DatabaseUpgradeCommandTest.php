@@ -48,7 +48,7 @@ class DatabaseUpgradeCommandTest extends TestCase
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
 
-        $this->runCommand($app, $command, ['--force' => '']);
+        $this->runCommand($app, $command, ['--force' => true]);
     }
 
     /**
@@ -106,7 +106,7 @@ class DatabaseUpgradeCommandTest extends TestCase
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
         $migrator->shouldReceive('doUpgrade')->once();
-        $command->shouldReceive('call')->with('database:seed', ['name' => 'foo'])->once()->andReturn(0);
+        $command->shouldReceive('call')->with('database:seed', ['name' => 'foo', '--force' => true])->once()->andReturn(0);
 
         $this->runCommand($app, $command, ['--seed' => 'foo']);
     }

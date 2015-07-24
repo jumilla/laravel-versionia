@@ -109,5 +109,4 @@ class DatabaseStatusCommandTest extends TestCase
 
         $this->runCommand($app, $command, []);
     }
-
 }

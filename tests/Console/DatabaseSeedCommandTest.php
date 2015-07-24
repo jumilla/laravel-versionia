@@ -64,7 +64,7 @@ class DatabaseSeedCommandTest extends TestCase
         $migrator->setDefaultSeed('foo');
 
         // 3. test
-        $this->runCommand($app, $command, ['--force' => '']);
+        $this->runCommand($app, $command, ['--force' => true]);
     }
 
     /**

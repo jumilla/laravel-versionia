@@ -213,7 +213,7 @@ class DatabaseRollbackCommandTest extends TestCase
         $migrator->shouldReceive('makeLogTable')->once();
         $migrator->shouldReceive('doDowngrade')->twice();
 
-        $this->runCommand($app, $command, ['group' => 'foo', '--all' => null]);
+        $this->runCommand($app, $command, ['group' => 'foo', '--all' => true]);
     }
 
     /**

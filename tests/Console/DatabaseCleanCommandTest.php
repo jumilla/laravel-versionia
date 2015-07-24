@@ -44,7 +44,7 @@ class DatabaseCleanCommandTest extends TestCase
         $migrator->shouldReceive('makeLogTable')->once();
         $migrator->shouldReceive('doDowngrade')->never();
 
-        $this->runCommand($app, $command, ['--force' => '']);
+        $this->runCommand($app, $command, ['--force' => true]);
     }
 
     /**
