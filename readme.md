@@ -6,41 +6,43 @@
 [![Total Downloads](https://poser.pugx.org/jumilla/laravel-versionia/d/total.svg)](https://packagist.org/packages/jumilla/laravel-versionia)
 [![Software License](https://poser.pugx.org/jumilla/laravel-versionia/license.svg)](https://packagist.org/packages/jumilla/laravel-versionia)
 
+[日本語ドキュメント - Japanese](readme-ja.md)
+
 Version based database migration system for Laravel 5.
 
-Laravel Versionia（バージョニア） は、バージョンベースのデータベースマイグレーションシステムです。
-Laravel 5で使えます。
+Laravel Versionia is version based database migration system.
+It can be used in Laravel 5 and Lumen 5.
 
-## コンセプト
+## Concepts
 
-Laravel 4 と 5 には、データベース(RDB)スキーマの管理のために「マイグレーション」という機能が標準搭載されています。
+The function as "my gray-tion" loads standards into Laravel 4 and 5 for management of a database (RDB) schema.
 
-マイグレーションはスキーマの作成・変更を時系列で管理していく仕組みです。
-データベースの初期データを定義する「シード」の実装のためのPHPクラス、artisanコマンドも提供します。
+Migration is the mechanism that making of a schema and change are being managed by time series.
+A PHP class for the mounting of "seed" as which data is defined an early stage of a data base and the artisan command are also offered.
 
-Versioniaは、標準のマイグレーションをさらに使いやすくします。
+Versionia makes standard migration easier to use.
 
-- Laravel 5のマイグレーションに、実装者が明示的に定義する「バージョン」の機能を追加します。
-- Laravel 5の`Seeder`クラスを名前で識別できるようにし、複数のシードの切り替えを容易にします。
-- Laravel 5のアーキテクチャに沿い、サービスプロバイダで提供します。
-- マイグレーション、シードのクラスは`app`ディレクトリ下に配置できます。
+- The function of "version" a loaded user defines specifically is added to migration of Laravel 5.
+- As `Seeder` class of Laravel 5 can be distinguished under the name, more than one seed is changed easily.
+- It's offered by a service provider along architecture of Laravel 5.
+- Migration and seed classes can be arranged under the `app` directory.
 
-Laravel 5 アプリケーションやComposerパッケージが機能を提供する仕組みとしてサービスプロバイダが用いられます。
-サービスプロバイダでルーティングやイベントリスナーの定義などを行いますが、ここにマイグレーション、シードの定義ができるようになります。
+A service provider is employed as Laravel 5 application and the mechanism that a Composer package offers the function.
+The definition which are routing and an event listener by a service provider is given, but migrations and seeds can be defined now here.
 
-## インストール方法
+## Installation method
 
-### [A] Laravel Extension を組み込む (Laravel)
+### [A] Include Laravel Extension (Laravel).
 
-Laravel 5を使用される場合はこちら推奨です。
+When using Laravel 5, it's recommendation here.
 
-[Composer](http://getcomposer.org)を使います。
+Use [Composer](http://getcomposer.org).
 
 ```sh
 composer require laravel-plus/extension
 ```
 
-続いて、`config/app.php`の`providers`に`LaravelPlus\Extension\ServiceProvider::class`を追記します。
+Next `LaravelPlus\Extension\ServiceProvider::class` is added to a `provider` in `config/app.php`.
 
 ```php
     'providers' => [
@@ -50,17 +52,17 @@ composer require laravel-plus/extension
     ],
 ```
 
-詳しくは [Laravel Extension](https://github.com/jumilla/laravel-extension) の説明をお読みください。
+Please read the explanation of [Laravel Extension](https://github.com/jumilla/laravel-extension) for more information.
 
-### [B] Versionia を組み込む (Laravel)
+### [B] Include Versionia (Laravel)
 
-[Composer](http://getcomposer.org)を使います。
+Use [Composer](http://getcomposer.org).
 
 ```sh
 composer require jumilla/laravel-versionia
 ```
 
-続いて、`config/app.php`の`providers`に`Jumilla\Versionia\Laravel\ServiceProvider::class`を追記します。
+Next `Jumilla\Versionia\Laravel\ServiceProvider::class` is added to a `provider` in `config/app.php`.
 
 ```php
     'providers' => [
@@ -70,26 +72,26 @@ composer require jumilla/laravel-versionia
     ],
 ```
 
-### [C] Versionia を組み込む (Lumen)
+### [C] Include Versionia (Lumen)
 
-Lumenを使用される場合はこちらをどうぞ。
+When using Lumen, it's recommendation here.
 
-[Composer](http://getcomposer.org)を使います。
+Use [Composer](http://getcomposer.org).
 
 ```sh
 composer require jumilla/laravel-versionia
 ```
 
-続いて、`boostrap/app.php`に次のコードを追記します。
+Next the next code is added to `boostrap/app.php`.
 
 ```php
 $app->register(Jumilla\Versionia\Laravel\ServiceProvider::class);
 ```
 
-## マイグレーションバージョン定義
+## Migration version definition
 
-今まではマイグレーションクラスのファイル名に命名規則があり、ファイル名に埋め込まれたファイル生成日時によりマイグレーションの順序が決められていました。
-Versioniaでは、マイグレーションクラスごとにグループとバージョンを明示的に付与し、`DatabaseServiceProvider`クラスで定義します。
+There was Naming Rule in the file name of migration class so far, and an order of migration had been decided by the file generation date and time when you were embedded in the file name.
+A group and the version are given specifically every migration class and it's defined by the `DatabaseServiceProvider` class in Versionia.
 
 ```php
 <?php
@@ -122,14 +124,14 @@ class DatabaseServiceProvider extends ServiceProvider
 }
 ```
 
-### DatabaseServiceProvider の登録
+### Registration of DatabaseServiceProvider
 
-サービスプロバイダを新しく作成した場合は登録してください。
-[Laravel Extension](https://github.com/jumilla/laravel-extension) を使用している場合は、既に組み込まれているので追加不要です。
+When making a service provider newly, please register.
+When using [Laravel Extension](https://github.com/jumilla/laravel-extension) it's included already, so addition is unnecessary.
 
 #### Laravel
 
-`app\config.php` に `App\Providers\DatabaseServiceProvider::class` を追記します。
+`App\Providers\DatabaseServiceProvider::class` is added to `app\config.php`.
 
 ```php
     'providers' => [
@@ -143,26 +145,24 @@ class DatabaseServiceProvider extends ServiceProvider
 
 #### Lumen
 
-`bootstrap\app.php` に次のコードを追記します。
+The next code is added to `bootstrap\app.php`.
 
 ```php
 $app->register(App\Providers\DatabaseServiceProvider::class);
 ```
 
-### バージョン番号
+### Version Number
 
-Versioniaはバージョン番号の比較に、PHP標準関数の`version_compare()`を用いています。
-バージョン番号は、ドット区切りの**文字列**を指定してください。
+Versionia is using PHP standard function `version_compare()` for comparison of a version number.
+Please designate a character string of a dot end as a version number.
 
-### マイグレーションクラス
+### Migration class
 
-マイグレーションクラスは、Laravel 5標準の`make:migration`で生成されたものがそのまま使えます。
+The one generated by `make:migration` of Laravel 5 standard can use migration class just as it is.
 
-推奨の`app\Database\Migrations`ディレクトリに配置する場合は、`namespace App\Database\Migrations`を追加してください。
+When arranging in `app\Database\Migrations` directory of recommendation, please add `namespace App\Database\Migrations`.
 
-### マイグレーション定義
-
-次のコードはマイグレーション定義のサンプルです。
+The next code is a sample of migration definition.
 
 ```php
 <?php
@@ -203,10 +203,10 @@ class App_1_0 extends Migration
 }
 ```
 
-## シード定義
+## Seed class
 
-次のサンプルコードでは、シード `test`, `staging`, `production` を定義しています。
-`seeds()`メソッドの第2引数はデフォルトシードの指定で、`test`を指定しています。
+A seed defines `test`, `staging`, `production` by the next sample code.
+The 2nd argument of method `seeds()` designates `test` by designation of a default seed.
 
 ```php
 <?php
@@ -237,7 +237,7 @@ class DatabaseServiceProvider extends ServiceProvider
 }
 ```
 
-シードクラスは次のように記述します。
+A seed class is described as follows.
 
 ```php
 <?php
@@ -273,11 +273,11 @@ class Staging extends Seeder
 }
 ```
 
-## コマンド
+## Commands
 
 ### `database:status`
 
-マイグレーション、シードの定義とインストール状態を表示します。
+Migration and seed definition, installation state are displayed.
 
 ```sh
 php artisan database:status
@@ -285,21 +285,21 @@ php artisan database:status
 
 ### `database:upgrade`
 
-すべてのグループのマイグレーションの`up()`を実行し、最新バージョンにします。
+Run migration method `up()` of all groups, then up-to-date。
 
 ```sh
 php artisan database:upgrade
 ```
 
-マイグレーション後にシードを実行させることもできます。
+It's possible to make them seed after migration.
 
 ```sh
-php artisan database:upgrade --seed <シード>
+php artisan database:upgrade --seed <seed>
 ```
 
 ### `database:clean`
 
-すべてのグループのマイグレーションの`down()`を実行し、クリーン状態に戻します。
+Run migation method `down()` of all groups, then clean state.
 
 ```sh
 php artisan database:clean
@@ -307,68 +307,68 @@ php artisan database:clean
 
 ### `database:refresh`
 
-すべてのグループのマイグレーションをやり直します。
+Migration of all groups is redone.
 
-`database:clean`と`database:upgrade`を実行した結果と同じです。
+It's same run `database:clean` and `database:upgrade`.
 
 ```sh
 php artisan database:refresh
 ```
 
-マイグレーション後にシードを実行させることもできます。
+It's possible to run seed after migration.
 
 ```sh
-php artisan database:refresh --seed <シード>
+php artisan database:refresh --seed <seed>
 ```
 
 ### `database:rollback`
 
-指定グループのバージョンをひとつ戻します。
+The version of the designation group is returned one.
 
 ```sh
-php artisan database:rollback <グループ>
+php artisan database:rollback <group>
 ```
 
-`--all`オプションを付けると、指定グループのすべてのバージョンを削除します。
+When `--all` option specified, remove all version of group.
 
 ```sh
-php artisan database:rollback <グループ> --all
+php artisan database:rollback <group> --all
 ```
 
 ### `database:again`
 
-指定グループの最新バージョンを再作成します。
+Re-run latest migration version of group.
 
-`database:rollback <グループ>`と`database:upgrade`を実行したときと同じ効果があります。
+It's same effect as run `database:rollback <group>` and `database:upgrade`.
 
 ```sh
-php artisan database:again <グループ>
+php artisan database:again <group>
 ```
 
-マイグレーション後にシードを実行させることもできます。
+It's possible to run seed after migration.
 
 ```sh
-php artisan database:again <グループ> --seed <シード>
+php artisan database:again <group> --seed <seed>
 ```
 
 ### `database:seed`
 
-指定のシードを実行します。
+Run specified seed.
 
 ```sh
-php artisan database:seed <シード>
+php artisan database:seed <seed>
 ```
 
-`<シード>`を省略した場合、デフォルトのシードを実行します。
+When omitting `<seed>`, run default seed.
 
 ```sh
 php artisan database:seed
 ```
 
-## 著作権
+## Copyright
 
 古川 文生 / Fumio Furukawa (fumio@jumilla.me)
 
-## ライセンス
+## License
 
 MIT
