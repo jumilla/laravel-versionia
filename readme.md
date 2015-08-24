@@ -15,14 +15,14 @@ It can be used in Laravel 5 and Lumen 5.
 
 ## Concepts
 
-The function as "my gray-tion" loads standards into Laravel 4 and 5 for management of a database (RDB) schema.
+The feature as "migration" loads standards into Laravel 4 and 5 for management of a database (RDB) schema.
 
 Migration is the mechanism that making of a schema and change are being managed by time series.
 A PHP class for the mounting of "seed" as which data is defined an early stage of a data base and the artisan command are also offered.
 
 Versionia makes standard migration easier to use.
 
-- The function of "version" a loaded user defines specifically is added to migration of Laravel 5.
+- Add the programmer specified "version" to migration of Laravel 5.
 - As `Seeder` class of Laravel 5 can be distinguished under the name, more than one seed is changed easily.
 - It's offered by a service provider along architecture of Laravel 5.
 - Migration and seed classes can be arranged under the `app` directory.
