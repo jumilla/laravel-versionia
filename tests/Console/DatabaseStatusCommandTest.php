@@ -1,6 +1,5 @@
 <?php
 
-use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console\DatabaseStatusCommand as Command;
 
 class DatabaseStatusCommandTest extends TestCase

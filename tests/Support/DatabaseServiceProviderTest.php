@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\DatabaseManager;
-use Jumilla\Versionia\Laravel\Migrator;
 
 class DatabaseServiceProviderTest extends TestCase
 {

@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Database\DatabaseManager;
-use Illuminate\Database\Schema\Builder as SchemaBuilder;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema as SchemaFacade;
 use Jumilla\Versionia\Laravel\Migrator;

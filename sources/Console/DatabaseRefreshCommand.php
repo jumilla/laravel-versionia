@@ -32,6 +32,7 @@ class DatabaseRefreshCommand extends Command
      * Execute the console command.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+     *
      * @return mixed
      */
     public function handle(Migrator $migrator)
@@ -55,7 +56,6 @@ class DatabaseRefreshCommand extends Command
      * Execute clean and upgrade.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
-     * @return void
      */
     protected function doRefresh(Migrator $migrator)
     {

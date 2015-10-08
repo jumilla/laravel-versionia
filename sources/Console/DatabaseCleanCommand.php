@@ -31,6 +31,7 @@ class DatabaseCleanCommand extends Command
      * Execute the console command.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+     *
      * @return mixed
      */
     public function handle(Migrator $migrator)

@@ -28,6 +28,7 @@ class DatabaseStatusCommand extends Command
     * Execute the console command.
     *
     * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+    *
     * @return mixed
     */
    public function handle(Migrator $migrator)
@@ -43,7 +44,6 @@ class DatabaseStatusCommand extends Command
      * Show migration infomation.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
-     * @return void
      */
     protected function showMigrations(Migrator $migrator)
     {
@@ -79,7 +79,7 @@ class DatabaseStatusCommand extends Command
                         continue;
                     }
 
-                    $migration = new $class;
+                    $migration = new $class();
 
                     if (!$migration instanceof Migration) {
                         $this->line("{$mark} <info>[{$group}/{$version}]</info> <error>{$class}</error>");
@@ -103,7 +103,6 @@ class DatabaseStatusCommand extends Command
      * Show seed infomation.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
-     * @return void
      */
     protected function showSeeds(Migrator $migrator)
     {

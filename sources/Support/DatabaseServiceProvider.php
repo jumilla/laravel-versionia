@@ -9,8 +9,6 @@ abstract class DatabaseServiceProvider extends ServiceProvider
 {
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -20,7 +18,6 @@ abstract class DatabaseServiceProvider extends ServiceProvider
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     protected function migration($group, $version, $class)
     {
@@ -29,8 +26,7 @@ abstract class DatabaseServiceProvider extends ServiceProvider
 
     /**
      * @param string $group
-     * @param array $versions
-     * @return void
+     * @param array  $versions
      */
     protected function migrations($group, array $versions)
     {
@@ -40,8 +36,7 @@ abstract class DatabaseServiceProvider extends ServiceProvider
     /**
      * @param string $name
      * @param string $class
-     * @param bool $is_default
-     * @return void
+     * @param bool   $is_default
      */
     protected function seed($name, $class, $is_default = false)
     {
@@ -53,9 +48,8 @@ abstract class DatabaseServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param array $seeds
+     * @param array       $seeds
      * @param bool|string $default
-     * @return void
      */
     protected function seeds(array $seeds, $default = null)
     {

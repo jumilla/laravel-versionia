@@ -32,6 +32,7 @@ class DatabaseSeedCommand extends Command
      * Execute the console command.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+     *
      * @return mixed
      */
     public function handle(Migrator $migrator)
@@ -58,7 +59,7 @@ class DatabaseSeedCommand extends Command
 
         $this->infoSeedRun($seed, $class);
 
-        $seeder = new $class;
+        $seeder = new $class();
 
         $seeder->setCommand($this)->run();
     }

@@ -33,6 +33,7 @@ class DatabaseAgainCommand extends Command
      * Execute the console command.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+     *
      * @return mixed
      */
     public function handle(Migrator $migrator)
@@ -63,8 +64,7 @@ class DatabaseAgainCommand extends Command
      * Execute rollback and upgrade one version.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
-     * @param string $group
-     * @return void
+     * @param string                              $group
      */
     protected function doAgain(Migrator $migrator, $group)
     {
@@ -104,7 +104,8 @@ class DatabaseAgainCommand extends Command
      * Check installed version.
      *
      * @param string $installed_version
-     * @param array $definition_versions
+     * @param array  $definition_versions
+     *
      * @return bool
      */
     protected function checkInstalledVersion($installed_version, array $definition_versions)

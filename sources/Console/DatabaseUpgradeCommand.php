@@ -32,6 +32,7 @@ class DatabaseUpgradeCommand extends Command
      * Execute the console command.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+     *
      * @return mixed
      */
     public function handle(Migrator $migrator)
@@ -55,7 +56,6 @@ class DatabaseUpgradeCommand extends Command
      * Migrate dataase to latest version.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
-     * @return void
      */
     protected function migrateToLatest(Migrator $migrator)
     {

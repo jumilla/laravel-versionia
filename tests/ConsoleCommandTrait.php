@@ -1,16 +1,15 @@
 <?php
 
-use Symfony\Component\Console\Application as ConsoleApplication;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Console\Command;
-use Jumilla\Versionia\Laravel\Migrator;
 
 trait ConsoleCommandTrait
 {
     /**
-     * @param  \Illuminate\Contracts\Foundation\Application $app
-     * @param  \Illuminate\Console\Command $command
-     * @param  array $arguments
+     * @param \Illuminate\Contracts\Foundation\Application $app
+     * @param \Illuminate\Console\Command                  $command
+     * @param array                                        $arguments
+     *
      * @return int
      */
     protected function runCommand(Application $app, Command $command, array $arguments = [])
@@ -19,12 +18,13 @@ trait ConsoleCommandTrait
 
         $input = new Symfony\Component\Console\Input\ArrayInput($arguments);
 
-        return $command->run($input, new Symfony\Component\Console\Output\NullOutput);
+        return $command->run($input, new Symfony\Component\Console\Output\NullOutput());
     }
 
     /**
-     * @param  string $class
-     * @param  array $arguments
+     * @param string $class
+     * @param array  $arguments
+     *
      * @return int
      */
     protected function runCommandAndUserCancel(array $mocks, $class, array $arguments = [])

@@ -33,6 +33,7 @@ class DatabaseRollbackCommand extends Command
      * Execute the console command.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
+     *
      * @return mixed
      */
     public function handle(Migrator $migrator)
@@ -59,9 +60,8 @@ class DatabaseRollbackCommand extends Command
      * Execute rollback.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
-     * @param string $target_group
-     * @param string $target_version
-     * @return void
+     * @param string                              $target_group
+     * @param string                              $target_version
      */
     protected function doRollback(Migrator $migrator, $target_group, $target_version)
     {

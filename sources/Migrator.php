@@ -41,6 +41,7 @@ class Migrator
     /**
      * @param string $a
      * @param string $b
+     *
      * @return int
      */
     public function compareMigrationVersion($a, $b)
@@ -52,7 +53,6 @@ class Migrator
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     public function registerMigration($group, $version, $class)
     {
@@ -63,8 +63,7 @@ class Migrator
 
     /**
      * @param string $group
-     * @param array $versions
-     * @return void
+     * @param array  $versions
      */
     public function registerMigrations($group, array $versions)
     {
@@ -87,7 +86,8 @@ class Migrator
 
     /**
      * @param string $group
-     * @param bool $descending
+     * @param bool   $descending
+     *
      * @return array
      */
     public function migrationVersions($group, $descending = false)
@@ -101,6 +101,7 @@ class Migrator
 
     /**
      * @param string $group
+     *
      * @return array
      */
     public function migrationVersionsByDesc($group)
@@ -110,6 +111,7 @@ class Migrator
 
     /**
      * @param string $group
+     *
      * @return string
      */
     public function migrationLatestVersion($group)
@@ -124,6 +126,7 @@ class Migrator
     /**
      * @param string $group
      * @param string $version
+     *
      * @return string
      */
     public function migrationClass($group, $version)
@@ -136,7 +139,6 @@ class Migrator
     /**
      * @param string $name
      * @param string $class
-     * @return void
      */
     public function registerSeed($name, $class)
     {
@@ -147,7 +149,6 @@ class Migrator
 
     /**
      * @param array $seeds
-     * @return void
      */
     public function registerSeeds(array $seeds)
     {
@@ -164,7 +165,6 @@ class Migrator
 
     /**
      * @param string $seed
-     * @return void
      */
     public function setDefaultSeed($seed)
     {
@@ -181,6 +181,7 @@ class Migrator
 
     /**
      * @param string $name
+     *
      * @return string
      */
     public function seedClass($name)
@@ -189,7 +190,6 @@ class Migrator
     }
 
     /**
-     * @return void
      */
     public function makeLogTable()
     {
@@ -206,6 +206,7 @@ class Migrator
 
     /**
      * @param bool $descending
+     *
      * @return \Illuminate\Support\Collection
      */
     public function installedMigrations($descending = false)
@@ -244,7 +245,6 @@ class Migrator
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     public function addMigrationLog($group, $version, $class)
     {
@@ -258,7 +258,6 @@ class Migrator
     /**
      * @param string $group
      * @param string $version
-     * @return void
      */
     public function removeMigrationLog($group, $version)
     {
@@ -269,11 +268,10 @@ class Migrator
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     public function doUpgrade($group, $version, $class)
     {
-        $migration = new $class;
+        $migration = new $class();
 
         $migration->up();
 
@@ -284,7 +282,6 @@ class Migrator
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     public function doDowngrade($group, $version, $class = null)
     {
@@ -292,7 +289,7 @@ class Migrator
             $class = $this->migrationClass($group, $version);
         }
 
-        $migration = new $class;
+        $migration = new $class();
 
         $migration->down();
 

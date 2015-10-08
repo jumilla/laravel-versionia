@@ -14,11 +14,12 @@ class ApplicationStub extends Container implements ApplicationContract
         $this->addMocks($mocks);
 
         Facade::setFacadeApplication($this);
+
+        $this['path.base'] = __DIR__.'/sandbox';
     }
 
     /**
      * @param array $mocks
-     * @return void
      */
     public function addMocks(array $mocks = [])
     {
@@ -48,13 +49,14 @@ class ApplicationStub extends Container implements ApplicationContract
      */
     public function basePath()
     {
-        return __DIR__;
+        return $this['path.base'];
     }
 
     /**
      * Get or check the current application environment.
      *
      * @param  mixed
+     *
      * @return string
      */
     public function environment()
@@ -74,8 +76,6 @@ class ApplicationStub extends Container implements ApplicationContract
 
     /**
      * Register all of the configured providers.
-     *
-     * @return void
      */
     public function registerConfiguredProviders()
     {
@@ -84,9 +84,10 @@ class ApplicationStub extends Container implements ApplicationContract
     /**
      * Register a service provider with the application.
      *
-     * @param  \Illuminate\Support\ServiceProvider|string  $provider
-     * @param  array  $options
-     * @param  bool   $force
+     * @param \Illuminate\Support\ServiceProvider|string $provider
+     * @param array                                      $options
+     * @param bool                                       $force
+     *
      * @return \Illuminate\Support\ServiceProvider
      */
     public function register($provider, $options = [], $force = false)
@@ -97,9 +98,8 @@ class ApplicationStub extends Container implements ApplicationContract
     /**
      * Register a deferred provider and service.
      *
-     * @param  string  $provider
-     * @param  string  $service
-     * @return void
+     * @param string $provider
+     * @param string $service
      */
     public function registerDeferredProvider($provider, $service = null)
     {
@@ -107,8 +107,6 @@ class ApplicationStub extends Container implements ApplicationContract
 
     /**
      * Boot the application's service providers.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -117,8 +115,7 @@ class ApplicationStub extends Container implements ApplicationContract
     /**
      * Register a new boot listener.
      *
-     * @param  mixed  $callback
-     * @return void
+     * @param mixed $callback
      */
     public function booting($callback)
     {
@@ -127,8 +124,7 @@ class ApplicationStub extends Container implements ApplicationContract
     /**
      * Register a new "booted" listener.
      *
-     * @param  mixed  $callback
-     * @return void
+     * @param mixed $callback
      */
     public function booted($callback)
     {

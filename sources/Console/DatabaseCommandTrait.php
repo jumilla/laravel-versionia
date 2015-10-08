@@ -8,7 +8,6 @@ trait DatabaseCommandTrait
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     protected function infoUpgrade($group, $version, $class)
     {
@@ -19,7 +18,6 @@ trait DatabaseCommandTrait
      * @param string $group
      * @param string $version
      * @param string $class
-     * @return void
      */
     protected function infoDowngrade($group, $version, $class)
     {
@@ -29,7 +27,6 @@ trait DatabaseCommandTrait
     /**
      * @param string $seed
      * @param string $class
-     * @return void
      */
     protected function infoSeedRun($seed, $class)
     {

@@ -8,8 +8,6 @@ class ServiceProvider extends BaseServiceProvider
 {
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -23,8 +21,6 @@ class ServiceProvider extends BaseServiceProvider
 
     /**
      * Register the cache related console commands.
-     *
-     * @return void
      */
     public function registerCommands()
     {
