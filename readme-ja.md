@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/jumilla/laravel-versionia.svg)](https://travis-ci.org/jumilla/laravel-versionia)
 [![Quality Score](https://img.shields.io/scrutinizer/g/jumilla/laravel-versionia.svg?style=flat)](https://scrutinizer-ci.com/g/jumilla/laravel-versionia)
+[![Code Coverage](https://scrutinizer-ci.com/g/jumilla/laravel-versionia/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/jumilla/laravel-versionia/)
 [![Latest Stable Version](https://poser.pugx.org/jumilla/laravel-versionia/v/stable.svg)](https://packagist.org/packages/jumilla/laravel-versionia)
 [![Total Downloads](https://poser.pugx.org/jumilla/laravel-versionia/d/total.svg)](https://packagist.org/packages/jumilla/laravel-versionia)
 [![Software License](https://poser.pugx.org/jumilla/laravel-versionia/license.svg)](https://packagist.org/packages/jumilla/laravel-versionia)
