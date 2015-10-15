@@ -81,7 +81,6 @@ class MigrationMakeCommand extends BaseCommand
     {
         list($namespace, $class) = $this->splitFullQualifyClassName($fqcn);
 
-echo $fqcn, PHP_EOL;
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
             'class' => $class,
