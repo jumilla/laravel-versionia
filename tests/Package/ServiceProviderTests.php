@@ -6,7 +6,7 @@ use Jumilla\Versionia\Laravel\ServiceProvider;
 use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console;
 
-class ServiceProviderTest extends PHPUnit_Framework_TestCase
+class ServiceProviderTests extends PHPUnit_Framework_TestCase
 {
     use MockeryTrait;
 

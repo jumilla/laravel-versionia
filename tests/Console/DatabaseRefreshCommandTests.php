@@ -1,16 +1,16 @@
 <?php
 
 use Jumilla\Versionia\Laravel\Migrator;
-use Jumilla\Versionia\Laravel\Console\DatabaseCleanCommand as Command;
+use Jumilla\Versionia\Laravel\Console\DatabaseRefreshCommand as Command;
 
-class DatabaseCleanCommandTest extends TestCase
+class DatabaseRefreshCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
     /**
      * @test
      */
-    public function test_whenMigrationNotInstalled()
+    public function test_whenNoDefinition()
     {
         // 1. setup
         $app = $this->createApplication();
@@ -18,13 +18,36 @@ class DatabaseCleanCommandTest extends TestCase
         $command = new Command();
 
         // 2. condition
+        $migrator->shouldReceive('migrationGroups')->andReturn([]);
         $migrator->shouldReceive('installedMigrationsByDesc')->andReturn(collect());
 
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
-        $migrator->shouldReceive('doDowngrade')->never();
 
         $this->runCommand($app, $command, []);
+    }
+
+    /**
+     * @test
+     */
+    public function test_withSeedOption()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $migrator = $this->createMigrator();
+        $command = $this->createMock(Command::class, [
+            'call',
+        ]);
+
+        // 2. condition
+        $migrator->shouldReceive('migrationGroups')->andReturn([]);
+        $migrator->shouldReceive('installedMigrationsByDesc')->andReturn(collect());
+
+        // 3. test
+        $migrator->shouldReceive('makeLogTable')->once();
+        $command->shouldReceive('call')->with('database:seed', ['name' => 'foo', '--force' => true])->once()->andReturn(0);
+
+        $this->runCommand($app, $command, ['--seed' => 'foo']);
     }
 
     /**
@@ -38,11 +61,11 @@ class DatabaseCleanCommandTest extends TestCase
         $command = new Command();
 
         // 2. condition
+        $migrator->shouldReceive('migrationGroups')->andReturn([]);
         $migrator->shouldReceive('installedMigrationsByDesc')->andReturn(collect());
 
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
-        $migrator->shouldReceive('doDowngrade')->never();
 
         $this->runCommand($app, $command, ['--force' => true]);
     }
@@ -58,6 +81,7 @@ class DatabaseCleanCommandTest extends TestCase
             'installedMigrationsByDesc',
             'makeLogTable',
             'doDowngrade',
+            'doUpgrade',
         ]);
         $command = new Command();
 
@@ -75,13 +99,13 @@ class DatabaseCleanCommandTest extends TestCase
             ],
             'bar' => [
                 (object) ['version' => '1.0', 'class' => 'Bar_1_0'],
-                (object) ['version' => '1.1', 'class' => 'Bar_1_1'],
             ],
         ]));
 
         // 3. test
         $migrator->shouldReceive('makeLogTable')->once();
-        $migrator->shouldReceive('doDowngrade')->times(3);
+        $migrator->shouldReceive('doDowngrade')->times(2);
+        $migrator->shouldReceive('doUpgrade')->times(3);
 
         $this->runCommand($app, $command, []);
     }

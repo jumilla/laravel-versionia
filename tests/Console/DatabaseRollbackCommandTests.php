@@ -3,7 +3,7 @@
 use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console\DatabaseRollbackCommand as Command;
 
-class DatabaseRollbackCommandTest extends TestCase
+class DatabaseRollbackCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
@@ -26,10 +26,9 @@ class DatabaseRollbackCommandTest extends TestCase
 
         try {
             $this->runCommand($app, $command, []);
-
-            Assert::isFalse(true);
+            Assert::failure();
         } catch (RuntimeException $ex) {
-            Assert::isTrue(true);
+            Assert::success();
         }
     }
 
@@ -53,10 +52,9 @@ class DatabaseRollbackCommandTest extends TestCase
 
         try {
             $this->runCommand($app, $command, ['group' => 'bar']);
-
-            Assert::isFalse(true);
-        } catch (InvalidArgumentException $ex) {
-            Assert::isTrue(true);
+            Assert::failure();
+        } catch (UnexpectedValueException $ex) {
+            Assert::success();
         }
     }
 
@@ -86,9 +84,9 @@ class DatabaseRollbackCommandTest extends TestCase
 
         try {
             $this->runCommand($app, $command, ['group' => 'bar']);
-            Assert::isFalse(true);
-        } catch (InvalidArgumentException $ex) {
-            Assert::isTrue(true);
+            Assert::failure();
+        } catch (UnexpectedValueException $ex) {
+            Assert::success();
         }
     }
 

@@ -2,7 +2,7 @@
 
 use Jumilla\Versionia\Laravel\Console\DatabaseStatusCommand as Command;
 
-class DatabaseStatusCommandTest extends TestCase
+class DatabaseStatusCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

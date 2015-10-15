@@ -3,7 +3,7 @@
 use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console\DatabaseUpgradeCommand as Command;
 
-class DatabaseUpgradeCommandTest extends TestCase
+class DatabaseUpgradeCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 

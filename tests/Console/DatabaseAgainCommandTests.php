@@ -3,7 +3,7 @@
 use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console\DatabaseAgainCommand as Command;
 
-class DatabaseAgainCommandTest extends TestCase
+class DatabaseAgainCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
@@ -22,8 +22,9 @@ class DatabaseAgainCommandTest extends TestCase
         // 3. test
         try {
             $this->runCommand($app, $command, []);
+            Assert::failure();
         } catch (RuntimeException $ex) {
-            Assert::isTrue(true);
+            Assert::success();
         }
     }
 
@@ -43,10 +44,9 @@ class DatabaseAgainCommandTest extends TestCase
         // 3. test
         try {
             $this->runCommand($app, $command, ['group' => 'foo']);
-
-            Assert::isFalse(true);
-        } catch (InvalidArgumentException $ex) {
-            Assert::isTrue(true);
+            Assert::failure();
+        } catch (UnexpectedValueException $ex) {
+            Assert::success();
         }
     }
 
@@ -68,10 +68,9 @@ class DatabaseAgainCommandTest extends TestCase
         // 3. test
         try {
             $this->runCommand($app, $command, ['group' => 'foo']);
-
-            Assert::isFalse(true);
-        } catch (InvalidArgumentException $ex) {
-            Assert::isTrue(true);
+            Assert::failure();
+        } catch (UnexpectedValueException $ex) {
+            Assert::success();
         }
     }
 

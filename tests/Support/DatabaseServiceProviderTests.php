@@ -1,7 +1,7 @@
 <?php
 
 
-class DatabaseServiceProviderTest extends TestCase
+class DatabaseServiceProviderTests extends TestCase
 {
     use MockeryTrait;
 

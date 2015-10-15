@@ -4,7 +4,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema as SchemaFacade;
 use Jumilla\Versionia\Laravel\Migrator;
 
-class MigrationTest extends TestCase
+class MigrationTests extends TestCase
 {
     use MockeryTrait;
 

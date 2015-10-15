@@ -3,7 +3,7 @@
 use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console\DatabaseSeedCommand as Command;
 
-class DatabaseSeedCommandTest extends TestCase
+class DatabaseSeedCommandTests extends TestCase
 {
     use ConsoleCommandTrait;
 
