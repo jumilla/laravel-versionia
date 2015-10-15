@@ -52,6 +52,14 @@ class ServiceProvider extends BaseServiceProvider
             return new Console\DatabaseSeedCommand();
         });
 
+        $this->app->singleton('command.migration.make', function ($app) {
+            return new Console\MigrationMakeCommand();
+        });
+
+        $this->app->singleton('command.seeder.make', function ($app) {
+            return new Console\SeederMakeCommand();
+        });
+
         $this->commands([
             'command.database.status',
             'command.database.upgrade',
@@ -60,6 +68,8 @@ class ServiceProvider extends BaseServiceProvider
             'command.database.rollback',
             'command.database.again',
             'command.database.seed',
+            'command.migration.make',
+            'command.seeder.make',
         ]);
     }
 }

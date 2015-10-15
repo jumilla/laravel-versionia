@@ -2,6 +2,7 @@
 
 namespace Jumilla\Versionia\Laravel\Console;
 
+use UnexpectedValueException;
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Jumilla\Versionia\Laravel\Migrator;
@@ -46,7 +47,7 @@ class DatabaseAgainCommand extends Command
 
         // check valid group
         if (!in_array($group, $migrator->migrationGroups())) {
-            throw new \InvalidArgumentException("Migation group '$group' is not defined.");
+            throw new UnexpectedValueException("Migation group '$group' is not defined.");
         }
 
         $migrator->makeLogTable();
