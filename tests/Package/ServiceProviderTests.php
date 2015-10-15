@@ -31,6 +31,8 @@ class ServiceProviderTests extends PHPUnit_Framework_TestCase
         Assert::isInstanceOf(Console\DatabaseRollbackCommand::class, $app['command.database.rollback']);
         Assert::isInstanceOf(Console\DatabaseAgainCommand::class, $app['command.database.again']);
         Assert::isInstanceOf(Console\DatabaseSeedCommand::class, $app['command.database.seed']);
+        Assert::isInstanceOf(Console\MigrationMakeCommand::class, $app['command.migration.make']);
+        Assert::isInstanceOf(Console\SeederMakeCommand::class, $app['command.seeder.make']);
     }
 
     private function createApplication()

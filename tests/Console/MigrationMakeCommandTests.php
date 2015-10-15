@@ -11,7 +11,6 @@ class MigrationMakeCommandTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $migrator = $this->createMigrator();
         $command = new Command();
 
         // 2. condition
@@ -23,5 +22,50 @@ class MigrationMakeCommandTests extends TestCase
         } catch (RuntimeException $ex) {
             Assert::success();
         }
+    }
+
+    /**
+     * @test
+     */
+    public function test_withName_typeBlank()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $command = new Command();
+
+        // 2. condition
+
+        // 3. test
+        $this->runCommand($app, $command, ['name' => 'foo']);
+    }
+
+    /**
+     * @test
+     */
+    public function test_withName_typeCreate()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $command = new Command();
+
+        // 2. condition
+
+        // 3. test
+        $this->runCommand($app, $command, ['name' => 'foo', '--create' => true]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_withName_typeUpdate()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $command = new Command();
+
+        // 2. condition
+
+        // 3. test
+        $this->runCommand($app, $command, ['name' => 'foo', '--update' => true]);
     }
 }

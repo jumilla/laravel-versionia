@@ -7,6 +7,14 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     use MockeryTrait;
 
+    /**
+     * @after
+     */
+    public function teardownSandbox()
+    {
+        $this->removeDirectory(__DIR__.'/sandbox');
+    }
+
     protected function createApplication()
     {
         $this->app = new ApplicationStub([
@@ -26,5 +34,34 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $this->app->alias('database.migrator', Migrator::class);
 
         return $migrator;
+    }
+
+    /**
+     * Recursively delete a directory
+     *
+     * @param string $dir Directory name
+     */
+    function removeDirectory($dir)
+    {
+        if (!$dh = @opendir($dir)) {
+            return;
+        }
+
+        while (false !== ($obj = readdir($dh))) {
+            if ($obj == '.' || $obj == '..') {
+                continue;
+            }
+
+            $path = $dir.'/'.$obj;
+            if (is_dir($path)) {
+                $this->removeDirectory($path);
+            }
+            else {
+                unlink($path);
+            }
+        }
+
+        closedir($dh);
+        @rmdir($dir);
     }
 }

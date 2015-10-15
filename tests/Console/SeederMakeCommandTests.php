@@ -24,4 +24,19 @@ class SeederMakeCommandTests extends TestCase
             Assert::success();
         }
     }
+
+    /**
+     * @test
+     */
+    public function test_withName()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $command = new Command();
+
+        // 2. condition
+
+        // 3. test
+        $this->runCommand($app, $command, ['name' => 'foo']);
+    }
 }

@@ -16,6 +16,7 @@ class ApplicationStub extends Container implements ApplicationContract
         Facade::setFacadeApplication($this);
 
         $this['path.base'] = __DIR__.'/sandbox';
+        $this['path'] = __DIR__.'/sandbox/app';
     }
 
     /**
@@ -148,5 +149,10 @@ class ApplicationStub extends Container implements ApplicationContract
     public function getCachedServicesPath()
     {
         return $this->basePath().'/cache';
+    }
+
+    public function getNamespace()
+    {
+        return 'App\\';
     }
 }
