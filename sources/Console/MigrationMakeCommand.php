@@ -64,7 +64,7 @@ class MigrationMakeCommand extends BaseCommand
         } elseif ($this->option('update')) {
             return 'migration-update.stub';
         } else {
-            return 'migration-blank.stub';
+            return 'migration.stub';
         }
     }
 
