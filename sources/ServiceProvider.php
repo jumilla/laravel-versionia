@@ -12,7 +12,7 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->app->singleton('database.migrator', function ($app) {
-            return new Migrator($app['db']);
+            return new Migrator($app['db'], $app['config']);
         });
         $this->app->alias('database.migrator', Migrator::class);
 

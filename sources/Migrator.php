@@ -2,7 +2,8 @@
 
 namespace Jumilla\Versionia\Laravel;
 
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Contracts\Database\DatabaseManager;
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -14,6 +15,11 @@ class Migrator
      * @var \Illuminate\Database\DatabaseManager
      */
     protected $db;
+
+    /**
+     * @var string
+     */
+    protected $table = '_migrations';
 
     /**
      * @var array
@@ -31,11 +37,13 @@ class Migrator
     protected $default_seed;
 
     /**
-     * @param \Illuminate\Database\DatabaseManager $db
+     * @param \Illuminate\Contracts\Database\DatabaseManager $db
+     * @param \Illuminate\Contracts\Config\Repository $config
      */
-    public function __construct(DatabaseManager $db)
+    public function __construct(DatabaseManager $db, Config $config)
     {
         $this->db = $db;
+        $this->table = $config->get('database.migrations', $this->table);
     }
 
     /**
@@ -193,8 +201,8 @@ class Migrator
      */
     public function makeLogTable()
     {
-        if (!Schema::hasTable('_migrations')) {
-            Schema::create('_migrations', function (Blueprint $table) {
+        if (!Schema::hasTable($this->table)) {
+            Schema::create($this->table, function (Blueprint $table) {
                 $table->string('group');
                 $table->string('version');
                 $table->string('class');
@@ -211,7 +219,7 @@ class Migrator
      */
     public function installedMigrations($descending = false)
     {
-        return collect($this->db->table('_migrations')->get())->sort(function ($a, $b) use ($descending) {
+        return collect($this->db->table($this->table)->get())->sort(function ($a, $b) use ($descending) {
             return $this->compareMigrationVersion($a->version, $b->version) * ($descending ? -1 : 1);
         })->groupBy('group');
     }
@@ -228,7 +236,7 @@ class Migrator
      */
     public function installedLatestMigrations()
     {
-        return collect($this->db->table('_migrations')->get())->reduce(function ($result, $item) {
+        return collect($this->db->table($this->table)->get())->reduce(function ($result, $item) {
             if (isset($result[$item->group])) {
                 if ($this->compareMigrationVersion($item->version, $result[$item->group]->version) > 0) {
                     $result[$item->group] = $item;
@@ -248,7 +256,7 @@ class Migrator
      */
     public function addMigrationLog($group, $version, $class)
     {
-        $this->db->table('_migrations')->insert([
+        $this->db->table($this->table)->insert([
             'group' => $group,
             'version' => $version,
             'class' => $class,
@@ -261,7 +269,7 @@ class Migrator
      */
     public function removeMigrationLog($group, $version)
     {
-        $this->db->table('_migrations')->where('group', $group)->where('version', $version)->delete();
+        $this->db->table($this->table)->where('group', $group)->where('version', $version)->delete();
     }
 
     /**

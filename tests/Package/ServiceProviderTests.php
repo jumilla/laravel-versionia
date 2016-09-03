@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Events\Event;
-use Illuminate\Database\DatabaseManager;
+use Illuminate\Contracts\Events\Event;
 use Jumilla\Versionia\Laravel\ServiceProvider;
 use Jumilla\Versionia\Laravel\Migrator;
 use Jumilla\Versionia\Laravel\Console;
 
-class ServiceProviderTests extends PHPUnit_Framework_TestCase
+class ServiceProviderTests extends TestCase
 {
     use MockeryTrait;
 
@@ -35,9 +34,9 @@ class ServiceProviderTests extends PHPUnit_Framework_TestCase
         Assert::isInstanceOf(Console\SeederMakeCommand::class, $app['command.seeder.make']);
     }
 
-    private function createApplication()
+    protected function createApplication(array $mocks = [])
     {
-        $app = new ApplicationStub(['events' => Event::class, 'db' => DatabaseManager::class]);
+        $app = parent::createApplication(['events' => Event::class]);
 
         $app['events']->shouldReceive('listen');
 
