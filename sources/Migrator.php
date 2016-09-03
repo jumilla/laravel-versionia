@@ -2,7 +2,7 @@
 
 namespace Jumilla\Versionia\Laravel;
 
-use Illuminate\Contracts\Database\DatabaseManager;
+use Illuminate\Database\DatabaseManager;
 use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +19,7 @@ class Migrator
     /**
      * @var string
      */
-    protected $table = '_migrations';
+    protected $table = 'migrations';
 
     /**
      * @var array
@@ -40,10 +40,20 @@ class Migrator
      * @param \Illuminate\Contracts\Database\DatabaseManager $db
      * @param \Illuminate\Contracts\Config\Repository $config
      */
-    public function __construct(DatabaseManager $db, Config $config)
+    public function __construct(DatabaseManager $db, Config $config = null)
     {
         $this->db = $db;
-        $this->table = $config->get('database.migrations', $this->table);
+        if ($config) {
+            $this->table = $config->get('database.migrations', $this->table);
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getTable()
+    {
+        return $this->table;
     }
 
     /**

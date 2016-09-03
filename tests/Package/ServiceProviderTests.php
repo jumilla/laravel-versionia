@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Contracts\Events\Event;
 use Jumilla\Versionia\Laravel\ServiceProvider;
 use Jumilla\Versionia\Laravel\Migrator;
@@ -36,8 +37,12 @@ class ServiceProviderTests extends TestCase
 
     protected function createApplication(array $mocks = [])
     {
-        $app = parent::createApplication(['events' => Event::class]);
+        $app = parent::createApplication([
+            'config' => Config::class,
+            'events' => Event::class,
+        ]);
 
+        $app['config']->shouldReceive('get')->andReturn('migrations');
         $app['events']->shouldReceive('listen');
 
         return $app;

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Contracts\Config\Repository as Config;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema as SchemaFacade;
 use Jumilla\Versionia\Laravel\Migrator;
@@ -11,11 +12,42 @@ class MigrationTests extends TestCase
     /**
      * @test
      */
+    public function test_defaultTableName()
+    {
+        // 1. setup
+        $app = $this->createApplication();
+        $migrator = new Migrator($app['db']);
+
+        // 2. condition
+
+        // 3. test
+        Assert::equals('migrations', $migrator->getTable());
+    }
+
+    /**
+     * @test
+     */
+    public function test_configTableName()
+    {
+        // 1. setup
+        $app = $this->createApplication(['config' => Config::class]);
+        $app['config']->shouldReceive('get')->andReturn('__migrations');
+        $migrator = new Migrator($app['db'], $app['config']);
+
+        // 2. condition
+
+        // 3. test
+        Assert::equals('__migrations', $migrator->getTable());
+    }
+
+    /**
+     * @test
+     */
     public function test_compareMethod()
     {
         // 1. setup
         $app = $this->createApplication();
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
 
@@ -43,12 +75,12 @@ class MigrationTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
 
         // 3.1. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigration('foo', '1.0', 'Foo_1_0');
         $migrator->registerMigration('foo', '1.1', 'Foo_1_1');
         Assert::containsAll(['foo'], $migrator->migrationGroups());
@@ -59,7 +91,7 @@ class MigrationTests extends TestCase
         Assert::same([], $migrator->migrationVersions('bar'));
 
         // 3.2. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigrations('foo', [
             '1.0' => 'Foo_1_0',
             '1.1' => 'Foo_1_1',
@@ -71,7 +103,7 @@ class MigrationTests extends TestCase
         Assert::same([], $migrator->migrationVersions('bar'));
 
         // 3.3. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigrations('foo', [
             '1.1' => 'Foo_1_1',
             '1.0' => 'Foo_1_0',
@@ -83,7 +115,7 @@ class MigrationTests extends TestCase
         Assert::same([], $migrator->migrationVersions('bar'));
 
         // 3.4. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigration('foo', '1.0', 'Foo_1_0');
         $migrator->registerMigration('bar', '1.0', 'Bar_1_0');
         Assert::containsAll(['foo', 'bar'], $migrator->migrationGroups());
@@ -96,12 +128,12 @@ class MigrationTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
 
         // 3.1. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigrations('foo', [
             '1.0' => 'Foo_1_0',
             '1.1' => 'Foo_1_1',
@@ -109,7 +141,7 @@ class MigrationTests extends TestCase
         Assert::same('1.1', $migrator->migrationLatestVersion('foo'));
 
         // 3.2. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigrations('foo', [
             '1.1' => 'Foo_1_1',
             '1.0' => 'Foo_1_0',
@@ -125,12 +157,12 @@ class MigrationTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
 
         // 3.1. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerMigrations('foo', [
             '1.0' => 'Foo_1_0',
         ]);
@@ -145,18 +177,18 @@ class MigrationTests extends TestCase
     {
         // 1. setup
         $app = $this->createApplication();
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
 
         // 3.1. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerSeed('foo', 'Foo');
         Assert::containsAll(['foo'], $migrator->seedNames());
         Assert::same('Foo', $migrator->seedClass('foo'));
 
         // 3.2. test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerSeeds([
             'foo' => 'Foo',
             'bar' => 'Bar',
@@ -168,7 +200,7 @@ class MigrationTests extends TestCase
         Assert::same('foo', $migrator->defaultSeed());
 
         // 3.3. [Mistake] test
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
         $migrator->registerSeeds([
             'foo', 'Foo',
             'bar', 'Bar',
@@ -186,7 +218,7 @@ class MigrationTests extends TestCase
         // 1. setup
         $app = $this->createApplication();
         $schemaFacade = Mockery::mock('alias:'.SchemaFacade::class);
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
         $schemaFacade->shouldReceive('hasTable')->andReturn(false);
@@ -213,7 +245,7 @@ class MigrationTests extends TestCase
         // 1. setup
         $app = $this->createApplication();
         $schemaFacade = Mockery::mock('alias:'.SchemaFacade::class);
-        $migrator = new Migrator($app['db'], $app['config']);
+        $migrator = new Migrator($app['db']);
 
         // 2. condition
         $schemaFacade->shouldReceive('hasTable')->andReturn(true);
@@ -232,10 +264,10 @@ class MigrationTests extends TestCase
         // 1. setup
         $app = $this->createApplication();
         $db = $app['db'];
-        $migrator = new Migrator($db, $app['config']);
+        $migrator = new Migrator($db);
 
         // 2. condition
-        $db->shouldReceive('table')->with('_migrations')->andReturn($db);
+        $db->shouldReceive('table')->with('migrations')->andReturn($db);
         $db->shouldReceive('get')->andReturn([
             (object) ['group' => 'foo', 'version' => '1.2'],
             (object) ['group' => 'foo', 'version' => '1.0'],
@@ -269,10 +301,10 @@ class MigrationTests extends TestCase
         // 1. setup
         $app = $this->createApplication();
         $db = $app['db'];
-        $migrator = new Migrator($db, $app['config']);
+        $migrator = new Migrator($db);
 
         // 2. condition
-        $db->shouldReceive('table')->with('_migrations')->andReturn($db);
+        $db->shouldReceive('table')->with('migrations')->andReturn($db);
         $db->shouldReceive('get')->andReturn([
             (object) ['group' => 'foo', 'version' => '1.1'],
             (object) ['group' => 'foo', 'version' => '1.2'],
@@ -296,10 +328,10 @@ class MigrationTests extends TestCase
         // 1. setup
         $app = $this->createApplication();
         $db = $app['db'];
-        $migrator = new Migrator($db, $app['config']);
+        $migrator = new Migrator($db);
 
         // 2. condition
-        $db->shouldReceive('table')->with('_migrations')->andReturn($db);
+        $db->shouldReceive('table')->with('migrations')->andReturn($db);
 
         // 3. test
         $db->shouldReceive('insert')->once()->andReturnUsing(function (array $data) {
@@ -319,10 +351,10 @@ class MigrationTests extends TestCase
         // 1. setup
         $app = $this->createApplication();
         $db = $app['db'];
-        $migrator = new Migrator($db, $app['config']);
+        $migrator = new Migrator($db);
 
         // 2. condition
-        $db->shouldReceive('table')->with('_migrations')->andReturn($db);
+        $db->shouldReceive('table')->with('migrations')->andReturn($db);
 
         // 3. test
         $db->shouldReceive('where')->with('group', 'foo')->once()->andReturn($db);

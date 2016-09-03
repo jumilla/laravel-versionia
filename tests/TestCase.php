@@ -1,7 +1,6 @@
 <?php
 
-use Illuminate\Contracts\Config\Repository as Config;
-use Illuminate\Contracts\Database\DatabaseManager;
+use Illuminate\Database\DatabaseManager;
 use Jumilla\Versionia\Laravel\Migrator;
 
 abstract class TestCase extends PHPUnit_Framework_TestCase
@@ -19,11 +18,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected function createApplication(array $mocks = [])
     {
         $app = $this->app = new ApplicationStub(array_merge([
-            'config' => Config::class,
             'db' => DatabaseManager::class,
         ], $mocks));
-
-        $app['config']->shouldReceive('get')->andReturn('_migrations');
 
         return $app;
     }
@@ -31,7 +27,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     protected function createMigrator(array $overrides = null)
     {
         $migrator = $this->createMock(Migrator::class, $overrides, function () {
-            return [$this->app['db'], $this->app['config']];
+            return [$this->app['db']];
         });
 
         $this->app->instance('database.migrator', $migrator);
