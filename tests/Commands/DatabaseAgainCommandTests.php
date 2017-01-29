@@ -1,7 +1,7 @@
 <?php
 
 use Jumilla\Versionia\Laravel\Migrator;
-use Jumilla\Versionia\Laravel\Console\DatabaseAgainCommand as Command;
+use Jumilla\Versionia\Laravel\Commands\DatabaseAgainCommand as Command;
 
 class DatabaseAgainCommandTests extends TestCase
 {

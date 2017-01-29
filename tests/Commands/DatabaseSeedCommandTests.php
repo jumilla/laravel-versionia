@@ -1,7 +1,7 @@
 <?php
 
 use Jumilla\Versionia\Laravel\Migrator;
-use Jumilla\Versionia\Laravel\Console\DatabaseSeedCommand as Command;
+use Jumilla\Versionia\Laravel\Commands\DatabaseSeedCommand as Command;
 
 class DatabaseSeedCommandTests extends TestCase
 {

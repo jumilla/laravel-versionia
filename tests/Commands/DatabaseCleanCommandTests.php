@@ -1,7 +1,7 @@
 <?php
 
 use Jumilla\Versionia\Laravel\Migrator;
-use Jumilla\Versionia\Laravel\Console\DatabaseCleanCommand as Command;
+use Jumilla\Versionia\Laravel\Commands\DatabaseCleanCommand as Command;
 
 class DatabaseCleanCommandTests extends TestCase
 {

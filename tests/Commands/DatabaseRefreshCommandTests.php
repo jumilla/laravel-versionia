@@ -1,7 +1,7 @@
 <?php
 
 use Jumilla\Versionia\Laravel\Migrator;
-use Jumilla\Versionia\Laravel\Console\DatabaseRefreshCommand as Command;
+use Jumilla\Versionia\Laravel\Commands\DatabaseRefreshCommand as Command;
 
 class DatabaseRefreshCommandTests extends TestCase
 {

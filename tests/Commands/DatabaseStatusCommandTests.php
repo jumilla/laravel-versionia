@@ -1,6 +1,6 @@
 <?php
 
-use Jumilla\Versionia\Laravel\Console\DatabaseStatusCommand as Command;
+use Jumilla\Versionia\Laravel\Commands\DatabaseStatusCommand as Command;
 
 class DatabaseStatusCommandTests extends TestCase
 {
