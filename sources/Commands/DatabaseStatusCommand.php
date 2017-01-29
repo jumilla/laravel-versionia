@@ -1,6 +1,6 @@
 <?php
 
-namespace Jumilla\Versionia\Laravel\Console;
+namespace Jumilla\Versionia\Laravel\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Migrations\Migration;

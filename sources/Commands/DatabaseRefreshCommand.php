@@ -1,12 +1,12 @@
 <?php
 
-namespace Jumilla\Versionia\Laravel\Console;
+namespace Jumilla\Versionia\Laravel\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Jumilla\Versionia\Laravel\Migrator;
 
-class DatabaseUpgradeCommand extends Command
+class DatabaseRefreshCommand extends Command
 {
     use DatabaseCommandTrait;
     use ConfirmableTrait;
@@ -16,7 +16,7 @@ class DatabaseUpgradeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'database:upgrade
+    protected $signature = 'database:refresh
         {--seed= : Indicates if the seed task should be re-run.}
         {--force : Force the operation to run when in production.}
     ';
@@ -26,7 +26,7 @@ class DatabaseUpgradeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Database migration to latest version';
+    protected $description = 'Database migrate to clean, and migrate to latest version';
 
     /**
      * Execute the console command.
@@ -43,7 +43,7 @@ class DatabaseUpgradeCommand extends Command
 
         $migrator->makeLogTable();
 
-        $this->migrateToLatest($migrator);
+        $this->doRefresh($migrator);
 
         $seed = $this->option('seed');
 
@@ -53,33 +53,31 @@ class DatabaseUpgradeCommand extends Command
     }
 
     /**
-     * Migrate dataase to latest version.
+     * Execute clean and upgrade.
      *
      * @param \Jumilla\Versionia\Laravel\Migrator $migrator
      */
-    protected function migrateToLatest(Migrator $migrator)
+    protected function doRefresh(Migrator $migrator)
     {
-        $installed_migrations = $migrator->installedLatestMigrations();
+        // retreive installed versions
+        $installed_migrations = $migrator->installedMigrationsByDesc();
 
-        $migration_count = 0;
+        // downgrade
+        foreach ($installed_migrations as $group => $migrations) {
+            foreach ($migrations as $data) {
+                $this->infoDowngrade($group, $data->version, $data->class);
 
-        foreach ($migrator->migrationGroups() as $group) {
-            // [$group => ['version'=>$version, 'class'=>$class]] to $version
-            $latest_installed_version = data_get($installed_migrations, $group.'.version', Migrator::VERSION_NULL);
-
-            foreach ($migrator->migrationVersions($group) as $version => $class) {
-                if ($migrator->compareMigrationVersion($version, $latest_installed_version) > 0) {
-                    $this->line("<info>Up [$group/$version]</info> Run class <comment>$class</comment>");
-
-                    $migrator->doUpgrade($group, $version, $class);
-
-                    ++$migration_count;
-                }
+                $migrator->doDowngrade($group, $data->version);
             }
         }
 
-        if ($migration_count == 0) {
-            $this->line('<info>Nothing to migrate.</info>');
+        // upgrade
+        foreach ($migrator->migrationGroups() as $group) {
+            foreach ($migrator->migrationVersions($group) as $version => $class) {
+                $this->infoUpgrade($group, $version, $class);
+
+                $migrator->doUpgrade($group, $version, $class);
+            }
         }
     }
 }

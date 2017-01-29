@@ -1,12 +1,12 @@
 <?php
 
-namespace Jumilla\Versionia\Laravel\Console;
+namespace Jumilla\Versionia\Laravel\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Console\ConfirmableTrait;
 use Jumilla\Versionia\Laravel\Migrator;
 
-class DatabaseSeedCommand extends Command
+class DatabaseCleanCommand extends Command
 {
     use DatabaseCommandTrait;
     use ConfirmableTrait;
@@ -16,8 +16,7 @@ class DatabaseSeedCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'database:seed
-        {name? : the name of seed.}
+    protected $signature = 'database:clean
         {--force : Force the operation to run when in production.}
     ';
 
@@ -26,7 +25,7 @@ class DatabaseSeedCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Insert seed to database';
+    protected $description = 'Database migrate to clean';
 
     /**
      * Execute the console command.
@@ -41,26 +40,16 @@ class DatabaseSeedCommand extends Command
             return;
         }
 
-        $seed = $this->argument('name') ?: $migrator->defaultSeed();
+        $migrator->makeLogTable();
 
-        if (!$seed) {
-            $this->error('Default seed is not defined.');
+        $installed_migrations = $migrator->installedMigrationsByDesc();
 
-            return;
+        foreach ($installed_migrations as $group => $migrations) {
+            foreach ($migrations as $data) {
+                $this->infoDowngrade($group, $data->version, $data->class);
+
+                $migrator->doDowngrade($group, $data->version);
+            }
         }
-
-        $class = $migrator->seedClass($seed);
-
-        if (!$class) {
-            $this->error("Seed '$seed' is not defined.");
-
-            return;
-        }
-
-        $this->infoSeedRun($seed, $class);
-
-        $seeder = new $class();
-
-        $seeder->setCommand($this)->run();
     }
 }

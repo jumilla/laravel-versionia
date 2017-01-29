@@ -25,39 +25,39 @@ class ServiceProvider extends BaseServiceProvider
     public function registerCommands()
     {
         $this->app->singleton('command.database.status', function ($app) {
-            return new Console\DatabaseStatusCommand();
+            return new Commands\DatabaseStatusCommand();
         });
 
         $this->app->singleton('command.database.upgrade', function ($app) {
-            return new Console\DatabaseUpgradeCommand();
+            return new Commands\DatabaseUpgradeCommand();
         });
 
         $this->app->singleton('command.database.clean', function ($app) {
-            return new Console\DatabaseCleanCommand();
+            return new Commands\DatabaseCleanCommand();
         });
 
         $this->app->singleton('command.database.refresh', function ($app) {
-            return new Console\DatabaseRefreshCommand();
+            return new Commands\DatabaseRefreshCommand();
         });
 
         $this->app->singleton('command.database.rollback', function ($app) {
-            return new Console\DatabaseRollbackCommand();
+            return new Commands\DatabaseRollbackCommand();
         });
 
         $this->app->singleton('command.database.again', function ($app) {
-            return new Console\DatabaseAgainCommand();
+            return new Commands\DatabaseAgainCommand();
         });
 
         $this->app->singleton('command.database.seed', function ($app) {
-            return new Console\DatabaseSeedCommand();
+            return new Commands\DatabaseSeedCommand();
         });
 
         $this->app->singleton('command.migration.make', function ($app) {
-            return new Console\MigrationMakeCommand();
+            return new Commands\MigrationMakeCommand();
         });
 
         $this->app->singleton('command.seeder.make', function ($app) {
-            return new Console\SeederMakeCommand();
+            return new Commands\SeederMakeCommand();
         });
 
         $this->commands([

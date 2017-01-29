@@ -1,19 +1,21 @@
 <?php
 
-namespace Jumilla\Versionia\Laravel\Console;
+namespace Jumilla\Versionia\Laravel\Commands;
 
 use Jumilla\Generators\Laravel\OneFileGeneratorCommand as BaseCommand;
 use Jumilla\Generators\FileGenerator;
 
-class SeederMakeCommand extends BaseCommand
+class MigrationMakeCommand extends BaseCommand
 {
     /**
      * The console command singature.
      *
      * @var stringphp
      */
-    protected $signature = 'make:seeder
+    protected $signature = 'make:migration
         {name : The name of the class}
+        {--create= : The table to be created}
+        {--update= : The table to be updated}
     ';
 
     /**
@@ -21,14 +23,14 @@ class SeederMakeCommand extends BaseCommand
      *
      * @var string
      */
-    protected $description = 'Create a new seeder class';
+    protected $description = 'Create a new migration class';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Seeder';
+    protected $type = 'Migration';
 
     /**
      * The constructor.
@@ -47,7 +49,7 @@ class SeederMakeCommand extends BaseCommand
      */
     protected function getDefaultNamespace()
     {
-        return $this->getRootNamespace().'\\Database\\Seeds';
+        return $this->getRootNamespace().'\\Database\\Migrations';
     }
 
     /**
@@ -57,7 +59,13 @@ class SeederMakeCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return 'seeder.stub';
+        if ($this->option('create')) {
+            return 'migration-create.stub';
+        } elseif ($this->option('update')) {
+            return 'migration-update.stub';
+        } else {
+            return 'migration.stub';
+        }
     }
 
     /**
@@ -76,6 +84,7 @@ class SeederMakeCommand extends BaseCommand
         return $generator->file($path)->template($this->getStub(), [
             'namespace' => $namespace,
             'class' => $class,
+            'table' => $this->option('create') ?: $this->option('update'),
         ]);
     }
 }
