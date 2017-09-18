@@ -8,9 +8,9 @@ final class Assert
             $method = substr($method, 2);
         }
 
-        $method = 'assert'.ucfirst($method);
+        $method = 'PHPUnit\Framework\Assert::assert'.ucfirst($method);
 
-        call_user_func_array([PHPUnit_Framework_Assert::class, $method], $arguments);
+        call_user_func_array($method, $arguments);
     }
 
     public static function containsAll(array $excepts, array $provides)
