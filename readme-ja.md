@@ -34,6 +34,7 @@ Laravel 5 アプリケーションやComposerパッケージが機能を提供�
 ### [A] Laravel Extension を組み込む (Laravel)
 
 Laravel 5を使用される場合はこちら推奨です。
+Note: パッケージディスカバリーに対応しています。
 
 [Composer](http://getcomposer.org)を使います。
 
@@ -41,34 +42,16 @@ Laravel 5を使用される場合はこちら推奨です。
 composer require laravel-plus/extension
 ```
 
-続いて、`config/app.php`の`providers`に`LaravelPlus\Extension\ServiceProvider::class`を追記します。
-
-```php
-    'providers' => [
-        ...
-
-        LaravelPlus\Extension\ServiceProvider::class,
-    ],
-```
-
 詳しくは [Laravel Extension](https://github.com/jumilla/laravel-extension) の説明をお読みください。
 
 ### [B] Versionia を組み込む (Laravel)
+
+Note: パッケージディスカバリーに対応しています。
 
 [Composer](http://getcomposer.org)を使います。
 
 ```sh
 composer require jumilla/laravel-versionia
-```
-
-続いて、`config/app.php`の`providers`に`Jumilla\Versionia\Laravel\ServiceProvider::class`を追記します。
-
-```php
-    'providers' => [
-        ...
-
-        Jumilla\Versionia\Laravel\ServiceProvider::class,
-    ],
 ```
 
 ### [C] Versionia を組み込む (Lumen)

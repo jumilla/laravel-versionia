@@ -29,5 +29,14 @@
             "Jumilla\\Versionia\\Laravel\\": "sources/"
         }
     },
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Jumilla\\Versionia\\Laravel\\ServiceProvider"
+			],
+			"aliases": {
+			}
+		}
+	},
     "minimum-stability": "stable"
 }

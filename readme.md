@@ -36,6 +36,7 @@ The definition which are routing and an event listener by a service provider is 
 ### [A] Include Laravel Extension (Laravel).
 
 When using Laravel 5, it's recommendation here.
+Note: Pacakge Discovery supported.
 
 Use [Composer](http://getcomposer.org).
 
@@ -43,34 +44,16 @@ Use [Composer](http://getcomposer.org).
 composer require laravel-plus/extension
 ```
 
-Next `LaravelPlus\Extension\ServiceProvider::class` is added to a `provider` in `config/app.php`.
-
-```php
-    'providers' => [
-        ...
-
-        LaravelPlus\Extension\ServiceProvider::class,
-    ],
-```
-
 Please read the explanation of [Laravel Extension](https://github.com/jumilla/laravel-extension) for more information.
 
 ### [B] Include Versionia (Laravel)
+
+Note: Pacakge Discovery supported.
 
 Use [Composer](http://getcomposer.org).
 
 ```sh
 composer require jumilla/laravel-versionia
-```
-
-Next `Jumilla\Versionia\Laravel\ServiceProvider::class` is added to a `provider` in `config/app.php`.
-
-```php
-    'providers' => [
-        ...
-
-        Jumilla\Versionia\Laravel\ServiceProvider::class,
-    ],
 ```
 
 ### [C] Include Versionia (Lumen)
